@@ -17,6 +17,10 @@ namespace MOVA2020.forms
      * Tehnyt: Tommi Puurunen
      * Toteuttaa toiminnallisuusmäärittelyn
      *      4.2.4 Asiakkaan tiedot
+     *      
+     *      4.2.15 Varauksen lisäys
+     *      4.2.16 Varauksen muokkaus
+     *      4.2.17 Varauksen poisto
      */
     public partial class Asiakastiedot : Form
     {

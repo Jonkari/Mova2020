@@ -26,6 +26,10 @@ namespace MOVA2020
     *      4.2.6 Mökin muokkaaminen
     *      4.2.7 Mökin poisto
     *      4.2.8 Mökin tiedot
+    *      4.2.9 Mökin haku
+    *      
+    *      4.2.10 Toiminta-alueen lisäys
+    *      4.2.11 Toiminta-alueen poisto
     */
     public partial class Primary : Form
     {
@@ -55,6 +59,8 @@ namespace MOVA2020
 
         public void paivita()
         {
+            //Päivitetään datagridit ja listat, jaettu pienempiin funktioihin.
+            
             this.PaivitaPostinumerot();
             this.PaivitaToimintaalueet();
             this.PaivitaMokit();
@@ -332,6 +338,7 @@ namespace MOVA2020
 
         private void dgvAsiakkaat_Click(object sender, EventArgs e)
         {
+            //sallitaan vain tietyt napit jos asiakas on valittu
             if (dgvAsiakkaat.SelectedRows.Count > 0)
             {
                 btnMuokkaaAsiakas.Enabled = true;
@@ -348,7 +355,8 @@ namespace MOVA2020
 
         private void dgvToimintaalueet_Click(object sender, EventArgs e)
         {
-            if(dgvToimintaalueet.SelectedRows.Count > 0)
+            //sallitaan vain tietyt napit jos toiminta-alue on valittu
+            if (dgvToimintaalueet.SelectedRows.Count > 0)
             {
                 btnPoistaToimintaalue.Enabled = true;
                 btnToimintaalueentiedot.Enabled = true;
@@ -361,6 +369,7 @@ namespace MOVA2020
 
         private void btnPoistaToimintaalue_Click(object sender, EventArgs e)
         {
+            //4.2.11, Toiminta-alueen poisto, Poistetaan toiminta-alue, mutta ei sallita ellei ensimmäisenä poistetä palveluita ja mökkejä
             Toimintaalue t = (Toimintaalue)dgvToimintaalueet.SelectedRows[0].DataBoundItem;
             DialogResult dr = MessageBox.Show("Haluatko poistaa Toimialueen " + t.Nimi + " ?\nTämä ei onnistu ilman, että poistat ensimmäisenä kaikki palvelut ja mökit!", "Poista Toiminta-alue", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
@@ -379,6 +388,7 @@ namespace MOVA2020
 
         private void btnToimintaalueentiedot_Click(object sender, EventArgs e)
         {
+
             if (dgvToimintaalueet.SelectedRows.Count > 0) {
                 Toimintaalue t = (Toimintaalue)dgvToimintaalueet.SelectedRows[0].DataBoundItem;
                 Toimintaalueentiedot tt = new Toimintaalueentiedot(this, t);
@@ -387,6 +397,7 @@ namespace MOVA2020
         }
         private void dgvMokit_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            //järjestetään mökit datagrid
             DataGridView grid = (DataGridView)sender;
             SortOrder so = SortOrder.None;
             SortOrder current = grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection;
@@ -480,6 +491,7 @@ namespace MOVA2020
 
         private void dgvToimintaalueet_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            //järjestetään toiminta-alue datagrid
             DataGridView grid = (DataGridView)sender;
             SortOrder so = SortOrder.None;
             SortOrder current = grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection;
@@ -526,6 +538,7 @@ namespace MOVA2020
         }
         private void dgvAsiakkaat_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            //järjestetään asiakas datagrid
             DataGridView grid = (DataGridView)sender;
             SortOrder so = SortOrder.None;
             SortOrder current = grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection;
@@ -594,6 +607,7 @@ namespace MOVA2020
 
         private void dgvLaskut_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            //järjestetään lasku datagrid
             DataGridView grid = (DataGridView)sender;
             SortOrder so = SortOrder.None;
             SortOrder current = grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection;
@@ -648,6 +662,7 @@ namespace MOVA2020
                 dgvToimintaalueet.DataSource = this.laskut;
             }
             grid.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = so;
+        }
         private void btnMokkihaku_Click(object sender, EventArgs e)
         {
             Mokinhaku mh = new Mokinhaku(this);

@@ -50,19 +50,25 @@ namespace MOVA2020.forms
             TBpvm.Text = l.Varaus.Vahvistus_pvm.ToString("dd-MM-yyyy");
             string lisatiedot = l.Varaus.Mokki.Kuvaus + "\r\n" + l.Varaus.Mokki.Varustelu + "\r\n";
             string summat = l.Varaus.Alkupvm_varaus.ToString("yyyy-MM-dd")+" - "+l.Varaus.Loppupvm_varaus.ToString("yyyy-MM-dd")+ "\r\n";
-            summat += (l.Varaus.Loppupvm_varaus - l.Varaus.Alkupvm_varaus).TotalDays.ToString() + " päivä(ä), " +
-                l.Varaus.Mokki.Hinta * (l.Varaus.Loppupvm_varaus - l.Varaus.Alkupvm_varaus).TotalDays;
-
+            if (l.Varaus.Alkupvm_varaus == l.Varaus.Loppupvm_varaus)
+            {
+                summat += 1 + " päivä(ä), " + l.Varaus.Mokki.Hinta * 1 + "€";
+            }
+            else
+            {
+                summat += (l.Varaus.Loppupvm_varaus - l.Varaus.Alkupvm_varaus).TotalDays.ToString() + " päivä(ä), " +
+                l.Varaus.Mokki.Hinta * (l.Varaus.Loppupvm_varaus - l.Varaus.Alkupvm_varaus).TotalDays + "€";
+            }
 
             foreach (KeyValuePair<int, int> item in l.Varaus.Varauksenpalvelut)
             {
                 Palvelu pa = this.p.Palvelut.Find(i => i.Palvelu_id == item.Key);
                 lisatiedot += "\r\n" + pa.Nimi + pa.Hinta.ToString() + " €/kpl\r\nx" + item.Value;
-                summat += "\r\nx" + item.Value +" * " + pa.Hinta.ToString() + " = "+(item.Value * pa.Hinta);
+                summat += "\r\nx" + item.Value +" * " + pa.Hinta.ToString() + "€" + " = "+(item.Value * pa.Hinta) + "€";
             }
             TBlisatiedot.Text = lisatiedot;
-            summat += "\r\nSumma (ilman ALV):" + l.SummaEiAlv;
-            summat += "\r\nALV (24%):" + l.Alv;
+            summat += "\r\nSumma (ilman ALV):" + l.SummaEiAlv + "€";
+            summat += "\r\nALV (24%):" + l.Alv + "€";
             TBLaskutus.Text = summat;
         }
 
@@ -103,7 +109,7 @@ namespace MOVA2020.forms
             panelLasku.DrawToBitmap(bitmap, new Rectangle(0, 0, formSize.Width, formSize.Height)) ;
             bitmap.Save(fullpath, ImageFormat.Png);
 
-            sähkoposti sp = new sähkoposti(path+@"\"+filename);
+            Sahkoposti sp = new Sahkoposti(path+@"\"+filename);
             sp.Show();
         }
 

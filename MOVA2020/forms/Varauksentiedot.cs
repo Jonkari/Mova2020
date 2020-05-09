@@ -11,6 +11,12 @@ using MOVA2020.objs.dbitems;
 using MOVA2020;
 namespace MOVA2020.forms
 {
+    /*
+     * Tehnyt: Tommi Puurunen
+     * 
+     * Näyttää varauksen tiedot
+     * 
+     */
     public partial class Varauksentiedot : Form
     {
         private Varaus varaus;
@@ -26,8 +32,6 @@ namespace MOVA2020.forms
             dtpVarattupvm.Value = v.Varattu_pvm;
             calVaraus.SelectionStart = v.Alkupvm_varaus;
             calVaraus.SelectionEnd = v.Loppupvm_varaus;
-            calVaraus.TodayDate = v.Alkupvm_varaus;
-
         }
 
         private void btnAsiakkaantiedot_Click(object sender, EventArgs e)

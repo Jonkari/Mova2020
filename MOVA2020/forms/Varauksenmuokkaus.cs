@@ -12,6 +12,14 @@ namespace MOVA2020.forms
 {
     public partial class Varauksenmuokkaus : Form
     {
+        /*
+         * 
+         * Tekijä: Jonna Räsänen, Tommi Puurunen 
+         * 
+         * Toteuttaa toiminnallisuusmäärittelyn
+         *      4.2.15 Varauksen lisäys
+         *      4.2.16 Varauksen muokkaus
+         */ 
         public struct VarauksenPalvelu
         {
             public Palvelu p;
@@ -94,6 +102,7 @@ namespace MOVA2020.forms
                     if (v == null)
                     {
                         double summa = 0;
+                        double days;
                         query = "INSERT INTO varaus(mokki_mokki_id, asiakas_id, varattu_pvm, varattu_alkupvm, varattu_loppupvm) VALUES($mokki_id,$asiakas, $varattu_pvm, $varaus_alkupvm, $varaus_loppupvm)";
 
                         this.Lomake.Db.DMquery(query, pairs);
@@ -111,7 +120,14 @@ namespace MOVA2020.forms
                             pairs2.Add("$lkm", pari.lkm);
                             this.Lomake.Db.DMquery(query2, pairs2);
                         }
-                        summa += (calVaraus.SelectionRange.End - calVaraus.SelectionRange.Start).TotalDays * ((Mokki)this.CBMokki.SelectedItem).Hinta;
+                        if(calVaraus.SelectionRange.Start == calVaraus.SelectionRange.End)
+                        {
+                            days = 1;
+                        } else
+                        {
+                            days = (calVaraus.SelectionRange.End - calVaraus.SelectionRange.Start).TotalDays;
+                        }
+                        summa += days * ((Mokki)this.CBMokki.SelectedItem).Hinta;
                  
                         query2 = "INSERT INTO lasku (varaus_id, summa, alv) VALUES ($varaus_id, $summa, $alv)";
                         pairs2.Clear();
@@ -125,6 +141,7 @@ namespace MOVA2020.forms
                     } else
                     {
                         double summa = 0;
+                        double days;
                         Dictionary<string, object> pairs2 = new Dictionary<string, object>();
                         pairs2.Add("$varaus_id", this.v.Varaus_id);
                         string query2 = "DELETE FROM varauksen_palvelut WHERE varaus_id = $varaus_id";
@@ -147,7 +164,15 @@ namespace MOVA2020.forms
                             pairs2.Add("$lkm", pari.lkm);
                             this.Lomake.Db.DMquery(query2, pairs2);
                         }
-                        summa += (calVaraus.SelectionRange.End - calVaraus.SelectionRange.Start).TotalDays * ((Mokki)this.CBMokki.SelectedItem).Hinta;
+                        if (calVaraus.SelectionRange.Start == calVaraus.SelectionRange.End)
+                        {
+                            days = 1;
+                        }
+                        else
+                        {
+                            days = (calVaraus.SelectionRange.End - calVaraus.SelectionRange.Start).TotalDays;
+                        }
+                        summa += days * ((Mokki)this.CBMokki.SelectedItem).Hinta;
                         Lasku l = this.Lomake.Laskut.Find(i => i.Varaus.Varaus_id == this.v.Varaus_id);
                         query2 = "UPDATE lasku SET summa=$summa, alv=$alv WHERE varaus_id = $varaus_id AND lasku_id=$lasku_id";
                         pairs2.Clear();
