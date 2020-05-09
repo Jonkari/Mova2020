@@ -53,6 +53,7 @@ namespace MOVA2020.forms
         }
         private void btnMokinLisays_Click(object sender, EventArgs e)
         {
+
             //jos kaikki kentät eivät ole täytettynä, se ei anna lisätä mökkiä tietokantaan
             if (cbToimialue.SelectedIndex == -1 || tbMokkiNimi.Text.Length == 0 || tbPostinumero.TextLength < 5 || tbPostinumero.TextLength > 5
                 || tbKatuosoite.Text.Length == 0 || tbMokkiHinta.Text.Length == 0)
@@ -97,9 +98,19 @@ namespace MOVA2020.forms
                 {
                     errorProvider1.SetError(tbMokkiHinta, "");
                 }
+                return;
             }
             else
             {
+
+                if (this.p.Postinumerot.FindIndex(i => i.Postinro == tbPostinumero.Text) < 0)
+                {
+                    errorProvider1.SetError(tbPostinumero, "Postinumero ei ole oikea");
+                    return;
+                } else
+                {
+                    errorProvider1.SetError(tbPostinumero, "");
+                }
                 // SQL kysely
                 string query;
                 /*
