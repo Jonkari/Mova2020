@@ -197,10 +197,12 @@ namespace MOVA2020.forms
             VarauksenPalvelu pari;
             if (cbPalvelut.SelectedIndex != -1)
             {
-                pari.p = (Palvelu)cbPalvelut.SelectedItem;
-                pari.lkm = int.Parse(nmrLukumaara.Value.ToString());
-                lbVarauksenPalvelut.Items.Add(pari);
-                cbPalvelut.Items.Remove(cbPalvelut.SelectedItem);
+                if (nmrLukumaara.Value > 0) {
+                    pari.p = (Palvelu)cbPalvelut.SelectedItem;
+                    pari.lkm = int.Parse(nmrLukumaara.Value.ToString());
+                    lbVarauksenPalvelut.Items.Add(pari);
+                    cbPalvelut.Items.Remove(cbPalvelut.SelectedItem);
+                }
             }
         }
 

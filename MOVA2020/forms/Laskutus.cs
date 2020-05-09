@@ -47,7 +47,7 @@ namespace MOVA2020.forms
             TBAsiakas.Text = l.Varaus.Asiakas.ToString();
             TBnum.Text = l.Lasku_id.ToString();
             TBerapvm.Text = l.Erapaiva.ToString("dd-MM-yyyy");
-            TBpvm.Text = l.Varaus.Vahvistus_pvm.ToString("dd-MM-yyyy");
+            TBpvm.Text = DateTime.Now.ToString("dd-MM-yyyy");
             string lisatiedot = l.Varaus.Mokki.Kuvaus + "\r\n" + l.Varaus.Mokki.Varustelu + "\r\n";
             string summat = l.Varaus.Alkupvm_varaus.ToString("yyyy-MM-dd")+" - "+l.Varaus.Loppupvm_varaus.ToString("yyyy-MM-dd")+ "\r\n";
             if (l.Varaus.Alkupvm_varaus == l.Varaus.Loppupvm_varaus)
@@ -109,7 +109,7 @@ namespace MOVA2020.forms
             panelLasku.DrawToBitmap(bitmap, new Rectangle(0, 0, formSize.Width, formSize.Height)) ;
             bitmap.Save(fullpath, ImageFormat.Png);
 
-            Sahkoposti sp = new Sahkoposti(path+@"\"+filename);
+            Sahkoposti sp = new Sahkoposti(path+@"\"+filename, this.l.Varaus.Asiakas, false);
             sp.Show();
         }
 
