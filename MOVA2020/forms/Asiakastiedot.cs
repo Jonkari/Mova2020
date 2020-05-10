@@ -77,7 +77,7 @@ namespace MOVA2020.forms
         {
 
             Varaus v = (Varaus)dgvVaraukset.SelectedRows[0].DataBoundItem;
-            if (!v.Vahvistus_pvm.Equals(DateTime.Parse("1970-01-01 00:00:00")))
+            if (v.Vahvistus_pvm.Equals(DateTime.Parse("1970-01-01 00:00:00")))
             {
                 Varauksenmuokkaus vm = new Varauksenmuokkaus(this, this.paalomake, this.asiakas, v);
                 vm.Show();
