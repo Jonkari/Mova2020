@@ -109,7 +109,7 @@ namespace MOVA2020.forms
             panelLasku.DrawToBitmap(bitmap, new Rectangle(0, 0, formSize.Width, formSize.Height)) ;
             bitmap.Save(fullpath, ImageFormat.Png);
 
-            Sahkoposti sp = new Sahkoposti(path+@"\"+filename, this.l.Varaus.Asiakas, true);
+            Sahkoposti sp = new Sahkoposti(path+@"\"+filename, this.l.Varaus.Asiakas, false);
             sp.Show();
         }
 

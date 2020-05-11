@@ -32,6 +32,8 @@ namespace MOVA2020.forms
             dtpVarattupvm.Value = v.Varattu_pvm;
             calVaraus.SelectionStart = v.Alkupvm_varaus;
             calVaraus.SelectionEnd = v.Loppupvm_varaus;
+            dgvPalvelut.DataSource = null;
+            dgvPalvelut.DataSource = v.Varauksenpalvelut;
         }
 
         private void btnAsiakkaantiedot_Click(object sender, EventArgs e)
