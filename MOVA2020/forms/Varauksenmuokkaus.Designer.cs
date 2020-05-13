@@ -42,16 +42,18 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbToimintaalueet = new System.Windows.Forms.ComboBox();
             this.lblToimintaalue = new System.Windows.Forms.Label();
-            this.calVaraus = new System.Windows.Forms.MonthCalendar();
             this.button1 = new System.Windows.Forms.Button();
             this.btnMokinhaku = new System.Windows.Forms.Button();
+            this.dtpAlkaa = new System.Windows.Forms.DateTimePicker();
+            this.dtpPaattyy = new System.Windows.Forms.DateTimePicker();
+            this.lblVarauspaattyy = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nmrLukumaara)).BeginInit();
             this.SuspendLayout();
             // 
             // lblVaraus
             // 
             this.lblVaraus.AutoSize = true;
-            this.lblVaraus.Location = new System.Drawing.Point(4, 143);
+            this.lblVaraus.Location = new System.Drawing.Point(16, 144);
             this.lblVaraus.Name = "lblVaraus";
             this.lblVaraus.Size = new System.Drawing.Size(91, 17);
             this.lblVaraus.TabIndex = 3;
@@ -62,7 +64,7 @@
             this.btvaraus.AutoSize = true;
             this.btvaraus.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btvaraus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btvaraus.Location = new System.Drawing.Point(4, 647);
+            this.btvaraus.Location = new System.Drawing.Point(4, 570);
             this.btvaraus.Name = "btvaraus";
             this.btvaraus.Size = new System.Drawing.Size(470, 41);
             this.btvaraus.TabIndex = 9;
@@ -102,7 +104,7 @@
             // 
             this.lbVarauksenPalvelut.FormattingEnabled = true;
             this.lbVarauksenPalvelut.ItemHeight = 16;
-            this.lbVarauksenPalvelut.Location = new System.Drawing.Point(19, 476);
+            this.lbVarauksenPalvelut.Location = new System.Drawing.Point(19, 407);
             this.lbVarauksenPalvelut.Name = "lbVarauksenPalvelut";
             this.lbVarauksenPalvelut.Size = new System.Drawing.Size(443, 100);
             this.lbVarauksenPalvelut.TabIndex = 14;
@@ -110,7 +112,7 @@
             // btnLisaa
             // 
             this.btnLisaa.Font = new System.Drawing.Font("Microsoft Sans Serif", 32F);
-            this.btnLisaa.Location = new System.Drawing.Point(255, 374);
+            this.btnLisaa.Location = new System.Drawing.Point(255, 331);
             this.btnLisaa.Name = "btnLisaa";
             this.btnLisaa.Size = new System.Drawing.Size(95, 70);
             this.btnLisaa.TabIndex = 7;
@@ -121,7 +123,7 @@
             // btnPoista
             // 
             this.btnPoista.Font = new System.Drawing.Font("Microsoft Sans Serif", 32F);
-            this.btnPoista.Location = new System.Drawing.Point(367, 374);
+            this.btnPoista.Location = new System.Drawing.Point(367, 331);
             this.btnPoista.Name = "btnPoista";
             this.btnPoista.Size = new System.Drawing.Size(95, 70);
             this.btnPoista.TabIndex = 8;
@@ -133,14 +135,14 @@
             // 
             this.cbPalvelut.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPalvelut.FormattingEnabled = true;
-            this.cbPalvelut.Location = new System.Drawing.Point(19, 376);
+            this.cbPalvelut.Location = new System.Drawing.Point(19, 331);
             this.cbPalvelut.Name = "cbPalvelut";
             this.cbPalvelut.Size = new System.Drawing.Size(230, 24);
             this.cbPalvelut.TabIndex = 5;
             // 
             // nmrLukumaara
             // 
-            this.nmrLukumaara.Location = new System.Drawing.Point(19, 421);
+            this.nmrLukumaara.Location = new System.Drawing.Point(19, 378);
             this.nmrLukumaara.Name = "nmrLukumaara";
             this.nmrLukumaara.Size = new System.Drawing.Size(230, 23);
             this.nmrLukumaara.TabIndex = 6;
@@ -148,7 +150,7 @@
             // lblLukumäärä
             // 
             this.lblLukumäärä.AutoSize = true;
-            this.lblLukumäärä.Location = new System.Drawing.Point(16, 401);
+            this.lblLukumäärä.Location = new System.Drawing.Point(17, 358);
             this.lblLukumäärä.Name = "lblLukumäärä";
             this.lblLukumäärä.Size = new System.Drawing.Size(79, 17);
             this.lblLukumäärä.TabIndex = 19;
@@ -157,7 +159,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 356);
+            this.label3.Location = new System.Drawing.Point(16, 311);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 17);
             this.label3.TabIndex = 20;
@@ -182,16 +184,6 @@
             this.lblToimintaalue.TabIndex = 22;
             this.lblToimintaalue.Text = "Toiminta-alue";
             // 
-            // calVaraus
-            // 
-            this.calVaraus.CalendarDimensions = new System.Drawing.Size(2, 1);
-            this.calVaraus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.calVaraus.Location = new System.Drawing.Point(8, 169);
-            this.calVaraus.MaxSelectionCount = 365;
-            this.calVaraus.MinDate = new System.DateTime(2020, 5, 1, 0, 0, 0, 0);
-            this.calVaraus.Name = "calVaraus";
-            this.calVaraus.TabIndex = 4;
-            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
@@ -214,14 +206,40 @@
             this.btnMokinhaku.UseVisualStyleBackColor = true;
             this.btnMokinhaku.Click += new System.EventHandler(this.btnMokinhaku_Click);
             // 
+            // dtpAlkaa
+            // 
+            this.dtpAlkaa.Location = new System.Drawing.Point(19, 164);
+            this.dtpAlkaa.Name = "dtpAlkaa";
+            this.dtpAlkaa.Size = new System.Drawing.Size(230, 23);
+            this.dtpAlkaa.TabIndex = 26;
+            // 
+            // dtpPaattyy
+            // 
+            this.dtpPaattyy.Location = new System.Drawing.Point(19, 227);
+            this.dtpPaattyy.Name = "dtpPaattyy";
+            this.dtpPaattyy.Size = new System.Drawing.Size(230, 23);
+            this.dtpPaattyy.TabIndex = 27;
+            // 
+            // lblVarauspaattyy
+            // 
+            this.lblVarauspaattyy.AutoSize = true;
+            this.lblVarauspaattyy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblVarauspaattyy.Location = new System.Drawing.Point(16, 207);
+            this.lblVarauspaattyy.Name = "lblVarauspaattyy";
+            this.lblVarauspaattyy.Size = new System.Drawing.Size(103, 17);
+            this.lblVarauspaattyy.TabIndex = 28;
+            this.lblVarauspaattyy.Text = "Varaus päättyy";
+            // 
             // Varauksenmuokkaus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(491, 700);
+            this.ClientSize = new System.Drawing.Size(491, 623);
+            this.Controls.Add(this.lblVarauspaattyy);
+            this.Controls.Add(this.dtpPaattyy);
+            this.Controls.Add(this.dtpAlkaa);
             this.Controls.Add(this.btnMokinhaku);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.calVaraus);
             this.Controls.Add(this.lblToimintaalue);
             this.Controls.Add(this.cbToimintaalueet);
             this.Controls.Add(this.label3);
@@ -261,8 +279,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbToimintaalueet;
         private System.Windows.Forms.Label lblToimintaalue;
-        private System.Windows.Forms.MonthCalendar calVaraus;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnMokinhaku;
+        private System.Windows.Forms.DateTimePicker dtpAlkaa;
+        private System.Windows.Forms.DateTimePicker dtpPaattyy;
+        private System.Windows.Forms.Label lblVarauspaattyy;
     }
 }

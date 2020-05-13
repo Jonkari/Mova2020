@@ -668,5 +668,11 @@ namespace MOVA2020
             Mokinhaku mh = new Mokinhaku(this);
             mh.Show();
         }
+
+        private void tbEtsiAsiakkaanNimella_TextChanged(object sender, EventArgs e)
+        {
+            dgvLaskut.DataSource = null;
+            dgvLaskut.DataSource = this.Laskut.FindAll(i => i.Varaus.Asiakas.ToString().ToLower().Contains(tbEtsiAsiakkaanNimella.Text.ToLower()));
+        }
     }
 }

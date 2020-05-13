@@ -54,6 +54,9 @@
             // 
             // calVaraus
             // 
+            this.calVaraus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.calVaraus.CalendarDimensions = new System.Drawing.Size(3, 1);
             this.calVaraus.Enabled = false;
             this.calVaraus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
@@ -148,8 +151,11 @@
             // 
             // dgvPalvelut
             // 
+            this.dgvPalvelut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPalvelut.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPalvelut.Location = new System.Drawing.Point(272, 27);
+            this.dgvPalvelut.MaximumSize = new System.Drawing.Size(510, 231);
             this.dgvPalvelut.Name = "dgvPalvelut";
             this.dgvPalvelut.Size = new System.Drawing.Size(510, 231);
             this.dgvPalvelut.TabIndex = 14;

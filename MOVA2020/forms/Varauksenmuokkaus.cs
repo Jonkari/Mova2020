@@ -45,7 +45,6 @@ namespace MOVA2020.forms
             InitializeComponent();
             lbVarauksenPalvelut.DataSource = null;
             cbToimintaalueet.DataSource = this.Lomake.Toimintaalueet;
-            calVaraus.MinDate = DateTime.Now;
             this.Text = "Varauksen lisäys";
             this.btvaraus.Text = "Tee varaus";
         }
@@ -57,15 +56,16 @@ namespace MOVA2020.forms
             this.v = v;
             InitializeComponent();
             lbVarauksenPalvelut.DataSource = null;
-            calVaraus.MinDate = DateTime.Now;
             cbToimintaalueet.Items.Add(v.Mokki.Toimintaalue);
             cbToimintaalueet.SelectedIndex = 0;
             cbToimintaalueet.Enabled = false;
+            CBMokki.Items.Add(v.Mokki);
+            CBMokki.SelectedIndex = 0;
             CBMokki.Enabled = false;
             this.Text = "Varauksen muokkaus";
             this.btvaraus.Text = "Muokkaa varausta";
-            calVaraus.SelectionRange.Start = this.v.Alkupvm_varaus;
-            calVaraus.SelectionRange.End = this.v.Loppupvm_varaus;
+            dtpAlkaa.Value = this.v.Alkupvm_varaus;
+            dtpPaattyy.Value = this.v.Loppupvm_varaus;
 
 
             foreach(KeyValuePair<int, int> item in v.Varauksenpalvelut)
@@ -94,8 +94,8 @@ namespace MOVA2020.forms
                 pairs.Add("$asiakas", a.Asiakas_id);
                 pairs.Add("$mokki_id", ((Mokki)this.CBMokki.SelectedItem).Mokki_id);
                 pairs.Add("$varattu_pvm", DateTime.Now);
-                pairs.Add("$varaus_alkupvm", calVaraus.SelectionRange.Start);
-                pairs.Add("$varaus_loppupvm", calVaraus.SelectionRange.End);
+                pairs.Add("$varaus_alkupvm", dtpAlkaa.Value);
+                pairs.Add("$varaus_loppupvm", dtpPaattyy.Value);
 
                 if (this.MokkiVapaana())
                 {
@@ -108,7 +108,7 @@ namespace MOVA2020.forms
                         this.Lomake.Db.DMquery(query, pairs);
                         this.paivita();
 
-                        Varaus vt = this.Lomake.Varaukset.Find(i => i.Asiakas.Asiakas_id == a.Asiakas_id && i.Mokki.Mokki_id == ((Mokki)this.CBMokki.SelectedItem).Mokki_id && i.Alkupvm_varaus == calVaraus.SelectionRange.Start && i.Loppupvm_varaus == calVaraus.SelectionRange.End);
+                        Varaus vt = this.Lomake.Varaukset.Find(i => i.Asiakas.Asiakas_id == a.Asiakas_id && i.Mokki.Mokki_id == ((Mokki)this.CBMokki.SelectedItem).Mokki_id && i.Alkupvm_varaus == dtpAlkaa.Value && i.Loppupvm_varaus == dtpPaattyy.Value);
                         string query2 = "INSERT INTO varauksen_palvelut(varaus_id, palvelu_id, lkm) VALUES($varaus_id, $palvelu_id, $lkm)";
                         Dictionary<string, object> pairs2 = new Dictionary<string, object>();
                         foreach (VarauksenPalvelu pari in lbVarauksenPalvelut.Items)
@@ -120,12 +120,12 @@ namespace MOVA2020.forms
                             pairs2.Add("$lkm", pari.lkm);
                             this.Lomake.Db.DMquery(query2, pairs2);
                         }
-                        if(calVaraus.SelectionRange.Start == calVaraus.SelectionRange.End)
+                        if(dtpAlkaa.Value == dtpPaattyy.Value)
                         {
                             days = 1;
                         } else
                         {
-                            days = (calVaraus.SelectionRange.End - calVaraus.SelectionRange.Start).TotalDays;
+                            days = (dtpPaattyy.Value - dtpAlkaa.Value).TotalDays;
                         }
                         summa += days * ((Mokki)this.CBMokki.SelectedItem).Hinta;
                  
@@ -149,10 +149,10 @@ namespace MOVA2020.forms
 
                         query = "UPDATE varaus SET varattu_alkupvm = $varattu_alkupvm, varattu_loppupvm = $varattu_loppupvm WHERE varaus_id=$varaus_id";
                         pairs2.Clear();
-                        pairs2.Add("$varattu_alkupvm", calVaraus.SelectionRange.Start);
-                        pairs2.Add("$varattu_loppupvm", calVaraus.SelectionRange.End);
+                        pairs2.Add("$varattu_alkupvm", dtpAlkaa.Value);
+                        pairs2.Add("$varattu_loppupvm", dtpPaattyy.Value);
                         pairs2.Add("$varaus_id", this.v.Varaus_id);
-                        this.Lomake.Db.DMquery(query2, pairs);
+                        this.Lomake.Db.DMquery(query, pairs2);
 
                         query2 = "INSERT INTO varauksen_palvelut(varaus_id, palvelu_id, lkm) VALUES($varaus_id, $palvelu_id, $lkm)";
                         foreach (VarauksenPalvelu pari in lbVarauksenPalvelut.Items)
@@ -164,13 +164,13 @@ namespace MOVA2020.forms
                             pairs2.Add("$lkm", pari.lkm);
                             this.Lomake.Db.DMquery(query2, pairs2);
                         }
-                        if (calVaraus.SelectionRange.Start == calVaraus.SelectionRange.End)
+                        if (dtpAlkaa.Value == dtpPaattyy.Value)
                         {
                             days = 1;
                         }
                         else
                         {
-                            days = (calVaraus.SelectionRange.End - calVaraus.SelectionRange.Start).TotalDays;
+                            days = (dtpPaattyy.Value - dtpAlkaa.Value).TotalDays;
                         }
                         summa += days * ((Mokki)this.CBMokki.SelectedItem).Hinta;
                         Lasku l = this.Lomake.Laskut.Find(i => i.Varaus.Varaus_id == this.v.Varaus_id);
@@ -227,12 +227,14 @@ namespace MOVA2020.forms
             
             foreach(Varaus vm in mokinvaraukset)
             {
-                if(calVaraus.SelectionRange.Start >= vm.Alkupvm_varaus && calVaraus.SelectionRange.Start <= vm.Loppupvm_varaus)
-                {
-                    return false;
-                } else if (calVaraus.SelectionRange.End >= vm.Alkupvm_varaus && calVaraus.SelectionRange.End <= vm.Loppupvm_varaus)
-                {
-                    return false;
+                if (vm.Varaus_id != this.v.Varaus_id) {
+                    if (dtpAlkaa.Value >= vm.Alkupvm_varaus && dtpAlkaa.Value <= vm.Loppupvm_varaus)
+                    {
+                        return false;
+                    } else if (dtpPaattyy.Value >= vm.Alkupvm_varaus && dtpPaattyy.Value <= vm.Loppupvm_varaus)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;

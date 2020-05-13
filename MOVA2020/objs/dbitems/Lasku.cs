@@ -21,6 +21,7 @@ namespace MOVA2020.objs.dbitems
         }
 
         public long Lasku_id { get => lasku_id; }
+        public Asiakas Varaaja { get => this.varaus.Asiakas; }
         public DateTime Erapaiva { get => Varaus.Varattu_pvm.AddDays(14); }
         public double SummaEiAlv { get => summa; set => summa = value; }
         public double Alv { get => alv; set => alv = value; }

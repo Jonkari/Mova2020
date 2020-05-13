@@ -17,10 +17,24 @@ namespace MOVA2020.forms
      * Näyttää varauksen tiedot
      * 
      */
+
     public partial class Varauksentiedot : Form
     {
+        private struct VarauksenPalvelu
+        {
+            Palvelu palvelu;
+            int lukumaara;
+
+            public Palvelu Palvelu { set => palvelu = value; }
+
+            public string Nimi { get => this.palvelu.Nimi; }
+            public string Kuvaus { get => this.palvelu.Kuvaus; }
+            public double Hinta { get => this.palvelu.Hinta; }
+            public int Lukumaara { get => lukumaara; set => lukumaara = value; }
+        }
         private Varaus varaus;
         private Primary p;
+        
         public Varauksentiedot(Primary p, Varaus v)
         {
             this.varaus = v;
@@ -33,7 +47,15 @@ namespace MOVA2020.forms
             calVaraus.SelectionStart = v.Alkupvm_varaus;
             calVaraus.SelectionEnd = v.Loppupvm_varaus;
             dgvPalvelut.DataSource = null;
-            dgvPalvelut.DataSource = v.Varauksenpalvelut;
+            List<VarauksenPalvelu> vp = new List<VarauksenPalvelu>();
+            foreach(KeyValuePair<int, int> item in v.Varauksenpalvelut)
+            {
+                VarauksenPalvelu vpp = new VarauksenPalvelu();
+                vpp.Palvelu = this.p.Palvelut.Find(i => i.Palvelu_id == item.Key);
+                vpp.Lukumaara = item.Value;
+                vp.Add(vpp);
+            }
+            dgvPalvelut.DataSource = vp;
         }
 
         private void btnAsiakkaantiedot_Click(object sender, EventArgs e)
