@@ -212,6 +212,7 @@
             this.dtpAlkaa.Name = "dtpAlkaa";
             this.dtpAlkaa.Size = new System.Drawing.Size(230, 23);
             this.dtpAlkaa.TabIndex = 26;
+            this.dtpAlkaa.ValueChanged += new System.EventHandler(this.dtpAlkaa_ValueChanged);
             // 
             // dtpPaattyy
             // 

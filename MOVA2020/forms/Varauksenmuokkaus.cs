@@ -62,6 +62,7 @@ namespace MOVA2020.forms
             cbToimintaalueet.Items.Add(v.Mokki.Toimintaalue);
             cbToimintaalueet.SelectedIndex = 0;
             cbToimintaalueet.Enabled = false;
+            CBMokki.Items.Clear();
             CBMokki.Items.Add(v.Mokki);
             CBMokki.SelectedIndex = 0;
             CBMokki.Enabled = false;
@@ -286,6 +287,11 @@ namespace MOVA2020.forms
         {
             cbToimintaalueet.SelectedItem = valittu.Toimintaalue;
             CBMokki.SelectedItem = valittu;
+        }
+
+        private void dtpAlkaa_ValueChanged(object sender, EventArgs e)
+        {
+            dtpPaattyy.MinDate = dtpAlkaa.Value.Date;
         }
     }
 }
